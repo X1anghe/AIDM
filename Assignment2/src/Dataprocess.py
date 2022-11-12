@@ -52,4 +52,6 @@ if __name__ == '__main__':
         spl_l = list(executor.map(wrapper, partition_ranges))
     spl = get_result(spl_l)
     results = sales.drop(spl)
-    results.to_csv('Train.csv')
+    monthly_sales=results.groupby(["date_block_num","shop_id","item_id"])[
+    "date","item_price","item_cnt_day"].agg({"item_price":"mean","item_cnt_day":"sum"})
+    monthly_sales.to_csv('Train.csv')
